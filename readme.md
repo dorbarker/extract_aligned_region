@@ -18,6 +18,8 @@ TTTAAAAACT
 ```sh
 python -m pip install git+https://github.com/dorbarker/extract_aligned_region.git
 ```
+## Requires
+- samtools
 
 # Help
 ```sh
