@@ -6,10 +6,26 @@ from pathlib import Path
 def arguments():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-q", "--min-BQ", type=int, default=0)
-    parser.add_argument("-Q", "--min-MQ", type=int, default=0)
-    parser.add_argument("-d", "--min-depth", type=int, default=1)
-    parser.add_argument("-l", "--min-length", type=int)
+    parser.add_argument(
+        "-q", "--min-BQ", type=int, default=0, help="Minimum base quality score [0]"
+    )
+    parser.add_argument(
+        "-Q", "--min-MQ", type=int, default=0, help="Minimum map quality score [0]"
+    )
+    parser.add_argument(
+        "-d",
+        "--min-depth",
+        type=int,
+        default=1,
+        help="Minimum depth over a reference position to be considered aligned [1]",
+    )
+    parser.add_argument(
+        "-l",
+        "--min-length",
+        type=int,
+        default=1,
+        help="Minimum length for an aligned region [1]",
+    )
 
     parser.add_argument("bam", type=Path)
     parser.add_argument("reference", type=Path)
@@ -77,7 +93,11 @@ def get_contig_indicies(depth_table, min_length):
             region_start = pos
             prev_pos = pos
 
-    regions = [[chrom, start, stop] for [chrom, start, stop] in regions if (1+stop-start) >= min_length]
+    regions = [
+        [chrom, start, stop]
+        for [chrom, start, stop] in regions
+        if (1 + stop - start) >= min_length
+    ]
     return regions
 
 
@@ -87,6 +107,7 @@ def extract_regions(regions, reference) -> str:
 
     cmd = ["samtools", "faidx", reference] + region_strs
     subprocess.run(cmd, text=True)
+
 
 if __name__ == "__main__":
     main()
