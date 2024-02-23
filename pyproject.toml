@@ -9,6 +9,7 @@ maintainers = [
 version = "0.1.0"
 requires-python = ">=3.8"
 readme = "readme.md"
+license = { file="LICENSE" }
 
 [project.urls]
 Homepage = "https://github.com/dorbarker/extract_aligned_region"
